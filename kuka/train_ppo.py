@@ -1,10 +1,9 @@
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
-from env import KukaReachVisualEnv, CustomSkipFrame
+from env import KukaReachVisualEnv
 
 kuka_env = KukaReachVisualEnv()
-kuka_env = CustomSkipFrame(env=kuka_env)
-check_env(kuka_env, warn=True)
+# check_env(kuka_env, warn=True)
 
 model = PPO("CnnPolicy", kuka_env, policy_kwargs=dict(normalize_images=False), verbose=1)
 model.learn(total_timesteps=25000)

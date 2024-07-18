@@ -257,6 +257,7 @@ class KukaReachVisualEnv(gym.Env):
         if image is not None:
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255
+            image = random_crop(image.astype(np.uint8), self.kFinalImageSize['width'])
             return image
         else:
             return np.zeros(1, (self.kImageSize['width'], self.kImageSize['height']))
@@ -372,41 +373,41 @@ class KukaReachVisualEnv(gym.Env):
 
 
 
-class CustomSkipFrame(gym.Wrapper):
-    """ Make a 4 frame skip, so the observation space will change to (4,84,84) from (1,84,84)
+# class CustomSkipFrame(gym.Wrapper):
+#     """ Make a 4 frame skip, so the observation space will change to (4,84,84) from (1,84,84)
 
-    Args:
-        gym ([type]): [description]
-    """
+#     Args:
+#         gym ([type]): [description]
+#     """
 
-    def __init__(self, env, skip=4):
-        super(CustomSkipFrame, self).__init__(env)
-        self.observation_space = spaces.Box(low=0,
-                                            high=1,
-                                            shape=(skip, self.kFinalImageSize['width'], self.kFinalImageSize['height']))
-        self.skip = skip
-
-
-    def step(self, action):
-        total_reward = 0
-        states = []
-        state, reward, done, info = self.env.step(action)
-        for i in range(self.skip):
-            if not done:
-                state, reward, done, info = self.env.step(action)
-                total_reward += reward
-                states.append(state)
-            else:
-                states.append(state)
-        states = np.concatenate(states, 0)[None, :, :, :]
-        return random_crop(states.astype(np.uint8), self.kFinalImageSize['width']), reward, done, info
+#     def __init__(self, env, skip=4):
+#         super(CustomSkipFrame, self).__init__(env)
+#         self.observation_space = spaces.Box(low=0,
+#                                             high=1,
+#                                             shape=(skip, self.kFinalImageSize['width'], self.kFinalImageSize['height']))
+#         self.skip = skip
 
 
-    def reset(self, seed=None, options=None):
-        super().reset(seed=seed, options=options)
-        state, _ = self.env.reset()
-        states = np.concatenate([state for _ in range(self.skip)],
-                                0)[None, :, :, :]
-        return random_crop(states.astype(np.uint8), self.kFinalImageSize['width']), {}
+#     def step(self, action):
+#         total_reward = 0
+#         states = []
+#         state, reward, done, info = self.env.step(action)
+#         for i in range(self.skip):
+#             if not done:
+#                 state, reward, done, info = self.env.step(action)
+#                 total_reward += reward
+#                 states.append(state)
+#             else:
+#                 states.append(state)
+#         states = np.concatenate(states, 0)[None, :, :, :]
+#         return random_crop(states.astype(np.uint8), self.kFinalImageSize['width']), reward, done, info
+
+
+#     def reset(self, seed=None, options=None):
+#         super().reset(seed=seed, options=options)
+#         state, _ = self.env.reset()
+#         states = np.concatenate([state for _ in range(self.skip)],
+#                                 0)[None, :, :, :]
+#         return random_crop(states.astype(np.uint8), self.kFinalImageSize['width']), {}
 
 
