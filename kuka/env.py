@@ -9,7 +9,6 @@ import random
 import time
 import math
 import cv2
-import torch
 import os
 
 
@@ -108,7 +107,7 @@ class KukaReachVisualEnv(gym.Env):
             pitch=-70,
             roll=0,
             upAxisIndex=2)
-
+        
         self.projection_matrix = p.computeProjectionMatrixFOV(
             fov=self.camera_parameters['fov'],
             aspect=self.camera_parameters['width'] /
@@ -257,7 +256,8 @@ class KukaReachVisualEnv(gym.Env):
 
         if image is not None:
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-            image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255.
+            image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :]
+            # image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255.
             return image
         else:
             return np.zeros((1, self.kImageSize['width'], self.kImageSize['height']))
@@ -354,7 +354,6 @@ class KukaReachVisualEnv(gym.Env):
                                renderer=p.ER_BULLET_HARDWARE_OPENGL)
         self.images = px
         self.processed_image = self._process_image(self.images)
-        # self.observation=self.robot_state
         self.observation = self.object_state
         return self.processed_image, reward, self.terminated, info
 
