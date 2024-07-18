@@ -2,7 +2,7 @@ import pybullet as p
 import pybullet_data
 import gymnasium as gym
 from gymnasium import spaces
-from gym.utils import seeding
+from gymnasium.utils import seeding
 import numpy as np
 from math import sqrt
 import random
