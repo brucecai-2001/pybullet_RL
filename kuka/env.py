@@ -224,7 +224,7 @@ class KukaReachVisualEnv(gym.Env):
 
         self.object_pos = p.getBasePositionAndOrientation(self.object_id)[0]
 
-        self.images = self.images[:, :, : 3]  # the 4th channel is alpha channel, we do not need it.
+        self.images = self.images[:, 3, :, : ]  # the 4th channel is alpha channel, we do not need it.
 
 
         return self._process_image(self.images), {}
