@@ -216,6 +216,7 @@ class KukaReachVisualEnv(gym.Env):
                                projectionMatrix=self.projection_matrix,
                                renderer=p.ER_BULLET_HARDWARE_OPENGL)
         self.images = px
+        self.images = self.images[:, :, : 3]
 
         p.enableJointForceTorqueSensor(bodyUniqueId=self.kuka_id,
                                        jointIndex=self.num_joints - 1,
@@ -235,8 +236,8 @@ class KukaReachVisualEnv(gym.Env):
 
         if image is not None:
             # image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-            image = image / 255
-            image = np.transpose(image, (2, 0, 1))
+            image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255
+            #image = np.transpose(image, (2, 0, 1))
             return image
         else:
             return np.zeros(3, (self.kImageSize['width'], self.kImageSize['height']))
