@@ -139,7 +139,7 @@ class KukaReachVisualEnv(gym.Env):
         self.observation_space = spaces.Box(
             low=0, 
             high=1,
-            shape=(1, self.kImageSize['width'], self.kImageSize['height']))
+            shape=(self.kImageSize['width'], self.kImageSize['height'], 3))
 
 
         self.seed()
