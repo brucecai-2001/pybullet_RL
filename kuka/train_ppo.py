@@ -3,7 +3,7 @@ from stable_baselines3.common.env_checker import check_env
 from env import KukaReachVisualEnv
 
 kuka_env = KukaReachVisualEnv()
-# check_env(kuka_env, warn=True)
+check_env(kuka_env, warn=True)
 
 model = PPO("CnnPolicy", kuka_env, policy_kwargs=dict(normalize_images=False), verbose=1)
 model.learn(total_timesteps=25000)
