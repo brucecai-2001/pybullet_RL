@@ -5,7 +5,7 @@ from env import KukaReachVisualEnv
 kuka_env = KukaReachVisualEnv()
 check_env(kuka_env, warn=True)
 
-model = PPO("CnnPolicy", kuka_env, policy_kwargs=dict(normalize_images=False), verbose=1)
+model = PPO("CnnPolicy", kuka_env, verbose=1)
 model.learn(total_timesteps=25000)
 model.save("kuka_ppo")
 

@@ -122,8 +122,10 @@ class KukaReachVisualEnv(gym.Env):
         # 定义观测空间
         self.observation_space = spaces.Box(
             low=0, 
-            high=1,
-            shape=(3, self.kImageSize['width'], self.kImageSize['height']))
+            high=255,
+            shape=(3, self.kImageSize['width'], self.kImageSize['height']),
+            dtype=np.uint8
+        )
 
 
         self.seed()
@@ -235,8 +237,7 @@ class KukaReachVisualEnv(gym.Env):
         """
 
         if image is not None:
-            # image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-            image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height'])) / 255
+            image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))
             image = np.transpose(image, (2, 0, 1))
             return image
         else:
