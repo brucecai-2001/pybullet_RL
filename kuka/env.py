@@ -304,7 +304,7 @@ class KukaReachVisualEnv(gym.Env):
 
         return self._reward()
 
-    def _reward(self, seed=None, options=None):
+    def _reward(self):
         # 一定注意是取第4个值，请参考pybullet手册的这个函数返回值的说明
         self.robot_state = p.getLinkState(self.kuka_id, self.num_joints - 1)[4]
 
