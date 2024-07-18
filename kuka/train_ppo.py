@@ -5,7 +5,7 @@ from env import KukaReachVisualEnv, CustomSkipFrame
 kuka_env = KukaReachVisualEnv()
 kuka_env = CustomSkipFrame(env=kuka_env)
 
-model = PPO("CnnPolicy", kuka_env, normalize_advantage=False, verbose=1)
+model = PPO("CnnPolicy", kuka_env, policy_kwargs=dict(normalize_images=False), verbose=1)
 model.learn(total_timesteps=25000)
 model.save("kuka_ppo")
 
