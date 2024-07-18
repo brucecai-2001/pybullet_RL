@@ -262,7 +262,7 @@ class KukaReachVisualEnv(gym.Env):
             return np.zeros((1, self.kImageSize['width'], self.kImageSize['height']))
 
 
-    def step(self, action):
+    def step(self, action, seed=None, options=None):
         dv = 0.005
         dx = action[0] * dv
         dy = action[1] * dv
