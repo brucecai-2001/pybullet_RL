@@ -18,7 +18,6 @@ def random_crop(imgs, out):
         imgs: shape (B,C,H,W)
         out: output size (e.g. 84)
     """
-    print(imgs.shape)
     n, c, h, w = imgs.shape
     crop_max = h - out + 1
     w1 = np.random.randint(0, crop_max, n)
@@ -258,7 +257,9 @@ class KukaReachVisualEnv(gym.Env):
         if image is not None:
             print(image.shape)
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+            print(image.shape)
             image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255
+            print(image.shape)
             image = random_crop(image.astype(np.uint8), self.kFinalImageSize['width'])
             return image
         else:
