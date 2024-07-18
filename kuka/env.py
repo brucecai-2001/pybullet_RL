@@ -256,8 +256,7 @@ class KukaReachVisualEnv(gym.Env):
 
         if image is not None:
             print(image.shape)
-            image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-            print(image.shape)
+            # image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255
             print(image.shape)
             image = random_crop(image.astype(np.uint8), self.kFinalImageSize['width'])
