@@ -398,15 +398,14 @@ class CustomSkipFrame(gym.Wrapper):
                 states.append(state)
             else:
                 states.append(state)
-        states = np.concatenate(states, 0)[None, :, :, :]
+        states = np.concatenate(states, 0)
         return random_crop(states.astype(np.uint8), self.kFinalImageSize['width']), reward, done, info
 
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed, options=options)
         state, _ = self.env.reset()
-        states = np.concatenate([state for _ in range(self.skip)],
-                                0)
+        states = np.concatenate([state for _ in range(self.skip)], 0)
         return random_crop(states.astype(np.uint8), self.kFinalImageSize['width']), {}
 
 
