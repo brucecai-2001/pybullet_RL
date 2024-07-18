@@ -14,7 +14,7 @@ del model # remove to demonstrate saving and loading
 
 model = PPO.load("kuka_ppo")
 
-obs = kuka_env.reset()
+obs, _ = kuka_env.reset()
 while True:
     action, _ = model.predict(obs)
     obs, rewards, dones, info = kuka_env.step(action)

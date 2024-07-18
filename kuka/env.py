@@ -245,7 +245,7 @@ class KukaReachVisualEnv(gym.Env):
                                         3]  # the 4th channel is alpha channel, we do not need it.
 
 
-        return self._process_image(self.images)
+        return self._process_image(self.images), {}
 
     def _process_image(self, image):
         """Convert the RGB pic to gray pic and add a channel 1
@@ -404,9 +404,9 @@ class CustomSkipFrame(gym.Wrapper):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed, options=options)
-        state = self.env.reset()
+        state, _ = self.env.reset()
         states = np.concatenate([state for _ in range(self.skip)],
                                 0)[None, :, :, :]
-        return random_crop(states.astype(np.uint8), self.kFinalImageSize['width'])
+        return random_crop(states.astype(np.uint8), self.kFinalImageSize['width']), {}
 
 
