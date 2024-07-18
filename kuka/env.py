@@ -326,7 +326,8 @@ class KukaReachVisualEnv(gym.Env):
             reward = 0
             self.terminated = False
 
-        info = {'distance:', self.distance}
+        #info = {'distance:', self.distance}
+        info = {}
         (_, _, px, _,
          _) = p.getCameraImage(width=960,
                                height=960,
