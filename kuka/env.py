@@ -240,7 +240,7 @@ class KukaReachVisualEnv(gym.Env):
             image = np.transpose(image, (2, 0, 1))
             return image
         else:
-            return np.zeros(3, (self.kImageSize['width'], self.kImageSize['height']))
+            return np.zeros(3, (self.kImageSize['width'], self.kImageSize['height']), dtype=np.uint8)
 
 
     def step(self, action):
