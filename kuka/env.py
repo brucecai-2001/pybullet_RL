@@ -18,6 +18,7 @@ def random_crop(imgs, out):
         imgs: shape (B,C,H,W)
         out: output size (e.g. 84)
     """
+    print(imgs.shape)
     n, c, h, w = imgs.shape
     crop_max = h - out + 1
     w1 = np.random.randint(0, crop_max, n)
@@ -354,7 +355,6 @@ class KukaReachVisualEnv(gym.Env):
                                projectionMatrix=self.projection_matrix,
                                renderer=p.ER_BULLET_HARDWARE_OPENGL)
         self.images = px
-        print(px.shape)
         self.processed_image = self._process_image(self.images)
         self.observation = self.object_state
         return self.processed_image, reward, self.terminated, info
