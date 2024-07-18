@@ -248,7 +248,7 @@ class KukaReachVisualEnv(gym.Env):
         return self._process_image(self.images), {}
 
     def _process_image(self, image):
-        """Convert the RGB pic to gray pic and add a channel 1
+        """Convert the RGB pic to gray pic
 
         Args:
             image ([type]): [description]
@@ -259,7 +259,7 @@ class KukaReachVisualEnv(gym.Env):
             image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255
             return image
         else:
-            return np.zeros((1, self.kImageSize['width'], self.kImageSize['height']))
+            return np.zeros((self.kImageSize['width'], self.kImageSize['height']))
 
 
     def step(self, action):
