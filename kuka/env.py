@@ -36,7 +36,6 @@ class KukaReachVisualEnv(gym.Env):
 
     kMaxEpisodeSteps = 700
     kImageSize = {'width': 96, 'height': 96}
-    kFinalImageSize = {'width': 84, 'height': 84}
 
     def __init__(self, is_render=False, is_good_view=False):
         self.is_render = is_render
@@ -140,7 +139,7 @@ class KukaReachVisualEnv(gym.Env):
         self.observation_space = spaces.Box(
             low=0, 
             high=1,
-            shape=(1, self.kFinalImageSize['width'], self.kFinalImageSize['height']))
+            shape=(1, self.kImageSize['width'], self.kImageSize['height']))
 
 
         self.seed()
@@ -257,7 +256,6 @@ class KukaReachVisualEnv(gym.Env):
         if image is not None:
             # image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255
-            image = random_crop(image.astype(np.uint8), self.kFinalImageSize['width'])
             return image
         else:
             return np.zeros(1, (self.kImageSize['width'], self.kImageSize['height']))
