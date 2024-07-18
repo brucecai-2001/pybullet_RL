@@ -1,7 +1,7 @@
 import pybullet as p
 import pybullet_data
-import gym
-from gym import spaces
+import gymnasium as gym
+from gymnasium import spaces
 from gym.utils import seeding
 import numpy as np
 from math import sqrt
