@@ -5,7 +5,7 @@ from env import KukaReachVisualEnv
 env = make_vec_env(KukaReachVisualEnv, n_envs=1)
 
 model = PPO("CnnPolicy", env, verbose=1)
-model.learn(total_timesteps=25000)
+model.learn(total_timesteps=25000, progress_bar=True)
 model.save("kuka_ppo")
 
 del model # remove to demonstrate saving and loading
@@ -16,4 +16,4 @@ obs, _ = env.reset()
 while True:
     action, _ = model.predict(obs)
     obs, rewards, dones, info = env.step(action)
-    kuka_env.render("human")
+    env.render("human")
