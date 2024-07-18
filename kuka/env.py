@@ -333,7 +333,7 @@ class KukaReachVisualEnv(gym.Env):
                                viewMatrix=self.view_matrix,
                                projectionMatrix=self.projection_matrix,
                                renderer=p.ER_BULLET_HARDWARE_OPENGL)
-        self.images = px
+        self.images = px[:, :, : 3]
         self.processed_image = self._process_image(self.images)
         self.observation = self.object_state
         truncated = False  # we do not limit the number of steps here
