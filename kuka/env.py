@@ -150,7 +150,7 @@ class KukaReachVisualEnv(gym.Env):
         self.np_random, seed = seeding.np_random(seed)
         return [seed]
 
-    def reset(self):
+    def reset(self, seed=None, options=None):
         """
         将机器人关节恢复到初始化状态
         """
