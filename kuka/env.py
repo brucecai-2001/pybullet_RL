@@ -12,22 +12,6 @@ import cv2
 import os
 
 
-def random_crop(imgs, out):
-    """
-        args:
-        imgs: shape (B,C,H,W)
-        out: output size (e.g. 84)
-    """
-    n, h, w, c = imgs.shape
-    crop_max = h - out + 1
-    w1 = np.random.randint(0, crop_max, n)
-    h1 = np.random.randint(0, crop_max, n)
-    cropped = np.empty((n, c, out, out), dtype=imgs.dtype)
-    for i, (img, w11, h11) in enumerate(zip(imgs, w1, h1)):
-        cropped[i] = img[:, h11:h11 + out, w11:w11 + out]
-    return cropped
-
-
 class KukaReachVisualEnv(gym.Env):
     metadata = {
         'render.modes': ['human', 'rgb_array'],
@@ -139,7 +123,7 @@ class KukaReachVisualEnv(gym.Env):
         self.observation_space = spaces.Box(
             low=0, 
             high=1,
-            shape=(self.kImageSize['width'], self.kImageSize['height'], 3))
+            shape=(3, self.kImageSize['width'], self.kImageSize['height']))
 
 
         self.seed()
@@ -240,8 +224,7 @@ class KukaReachVisualEnv(gym.Env):
 
         self.object_pos = p.getBasePositionAndOrientation(self.object_id)[0]
 
-        self.images = self.images[:, :, :
-                                        3]  # the 4th channel is alpha channel, we do not need it.
+        self.images = self.images[:, :, : 3]  # the 4th channel is alpha channel, we do not need it.
 
 
         return self._process_image(self.images), {}
@@ -255,10 +238,11 @@ class KukaReachVisualEnv(gym.Env):
 
         if image is not None:
             # image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+            image = image.transpose((2, 0, 1))
             image = cv2.resize(image, (self.kImageSize['width'], self.kImageSize['height']))[None, :, :] / 255
             return image
         else:
-            return np.zeros(1, (self.kImageSize['width'], self.kImageSize['height']))
+            return np.zeros(3, (self.kImageSize['width'], self.kImageSize['height']))
 
 
     def step(self, action):
