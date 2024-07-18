@@ -236,6 +236,7 @@ class KukaReachVisualEnv(gym.Env):
         if image is not None:
             # image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             image = image / 255
+            image = np.transpose(image, (2, 0, 1))
             return image
         else:
             return np.zeros(3, (self.kImageSize['width'], self.kImageSize['height']))
