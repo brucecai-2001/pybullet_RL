@@ -16,5 +16,5 @@ model = PPO.load("kuka_ppo")
 obs, _ = kuka_env.reset()
 while True:
     action, _ = model.predict(obs)
-    obs, rewards, dones, info = kuka_env.step(action)
+    obs, rewards, dones, truncated, info = kuka_env.step(action)
     kuka_env.render("human")

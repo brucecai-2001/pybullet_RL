@@ -336,7 +336,8 @@ class KukaReachVisualEnv(gym.Env):
         self.images = px
         self.processed_image = self._process_image(self.images)
         self.observation = self.object_state
-        return self.processed_image, reward, self.terminated, False, info
+        truncated = False  # we do not limit the number of steps here
+        return self.processed_image, reward, self.terminated, truncated, info
 
     def close(self):
         p.disconnect()
