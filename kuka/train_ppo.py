@@ -10,10 +10,3 @@ model.save("kuka_ppo")
 
 del model # remove to demonstrate saving and loading
 
-model = PPO.load("kuka_ppo")
-
-obs, _ = env.reset()
-while True:
-    action, _ = model.predict(obs)
-    obs, rewards, dones, info = env.step(action)
-    env.render("human")

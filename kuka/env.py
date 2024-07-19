@@ -14,16 +14,17 @@ import os
 
 class KukaReachVisualEnv(gym.Env):
     metadata = {
-        'render.modes': ['human', 'rgb_array'],
+        'render_modes': ['human', 'rgb_array'],
         'video.frames_per_second': 50
     }
 
     kMaxEpisodeSteps = 700
     kImageSize = {'width': 96, 'height': 96}
 
-    def __init__(self, is_render=False, is_good_view=False):
+    def __init__(self, is_render=False, is_good_view=False, render_mode="human"):
         self.is_render = is_render
         self.is_good_view = is_good_view
+        #self.render_mode = render_mode
 
         if self.is_render:
             p.connect(p.GUI)
