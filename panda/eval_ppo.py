@@ -37,7 +37,7 @@ while True:
     obs, rewards, dones, truncated, info = env.step(action)
     env.render()  # Rendering in real-time (1x)
     # Sleep for 0.1 seconds to slow down the rendering
-    time.sleep(0.1)
+    time.sleep(1.0)
 
     if dones:
         obs, info = env.reset()
