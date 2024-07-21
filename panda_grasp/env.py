@@ -28,17 +28,16 @@ class PandaEnv(object):
     self.state_durations =[3, 1, 1, 1, 1, 1, 1]
   
     orn=[-0.707107, 0.0, 0.0, 0.707107]
+    self.offset = np.array(offset)
     self.panda = self.bullet_client.loadURDF("franka_panda/panda.urdf", np.array([0,0,0])+self.offset, orn, useFixedBase=True, flags=flags)
     
-    self.offset = np.array(offset)
-    self.bullet_client.loadURDF("tray/traybox.urdf", [0+offset[0], 0+offset[1], -0.6+offset[2]], [-0.5, -0.5, -0.5, 0.5], flags=flags)
-    self.bullet_client.changeVisualShape(self.legos[0],-1,rgbaColor=[1,0,0,1])
-
     self.legos=[]
     self.legos.append(self.bullet_client.loadURDF("lego/lego.urdf",np.array([0.1, 0.3, -0.5])+self.offset, flags=flags))
     self.legos.append(self.bullet_client.loadURDF("lego/lego.urdf",np.array([-0.1, 0.3, -0.5])+self.offset, flags=flags))
     self.legos.append(self.bullet_client.loadURDF("lego/lego.urdf",np.array([0.1, 0.3, -0.7])+self.offset, flags=flags))
     self.sphereId = self.bullet_client.loadURDF("sphere_small.urdf",np.array( [0, 0.3, -0.6])+self.offset, flags=flags)
+    self.bullet_client.loadURDF("tray/traybox.urdf", [0+offset[0], 0+offset[1], -0.6+offset[2]], [-0.5, -0.5, -0.5, 0.5], flags=flags)
+    self.bullet_client.changeVisualShape(self.legos[0],-1,rgbaColor=[1,0,0,1])
     
     index = 0
     self.state = 0
@@ -121,10 +120,9 @@ class PandaEnv(object):
         self.prev_pos = [self.prev_pos[0] - diffX*0.1, self.prev_pos[1], self.prev_pos[2]-diffZ*0.1]
 
       orn = self.bullet_client.getQuaternionFromEuler([math.pi/2.,0.,0.])   # 机械手方向
-      
-      # 根据目标位置计算关节位置
-      jointPoses = self.bullet_client.calculateInverseKinematics(self.panda, pandaEndEffectorIndex, pos, orn, ll, ul, jr, jointPositions, maxNumIterations=20)
 
+      # 根据目标位置计算关节位置，并运动
+      jointPoses = self.bullet_client.calculateInverseKinematics(self.panda, pandaEndEffectorIndex, pos, orn, ll, ul, jr, jointPositions, maxNumIterations=20)
       for i in range(pandaNumDofs):
         self.bullet_client.setJointMotorControl2(self.panda, i, self.bullet_client.POSITION_CONTROL, jointPoses[i],force=5 * 240.)
 

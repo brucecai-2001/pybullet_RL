@@ -3,7 +3,7 @@ import pybullet_data as pd
 import math
 import time
 import numpy as np
-import panda_grasp.env as panda_sim
+from env import PandaEnv
 
 
 fps=240.
@@ -22,7 +22,7 @@ def run():
 	p.setGravity(0,-9.8,0)
 
 	# 初始化panda环境
-	env = panda_sim.PandaEnv(p, [0,0,0], fps)
+	env = PandaEnv(p, [0,0,0], fps)
 
 	graspWidthId = p.addUserDebugParameter("graspWidth", 0, 0.06, 0.01)
 
