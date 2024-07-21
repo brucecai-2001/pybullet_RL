@@ -14,7 +14,6 @@ def run():
 
 	# 设置仿真环境
 	p.configureDebugVisualizer(p.COV_ENABLE_Y_AXIS_UP, 1)	# 使Y轴向上, 默认Z轴向上
-	# p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
 	p.setPhysicsEngineParameter(maxNumCmdPer1ms=1000)
 	p.resetDebugVisualizerCamera(cameraDistance=1.3, cameraYaw=38, cameraPitch=-22, cameraTargetPosition=[0.35,-0.13,0])
 	p.setAdditionalSearchPath(pd.getDataPath())
